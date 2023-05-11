@@ -1,0 +1,3 @@
+name: workshop_k8s_apps
+runtime: nodejs
+description: A minimal Kubernetes TypeScript Pulumi program

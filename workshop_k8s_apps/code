@@ -1,0 +1,1607 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/default-container: prometheus-operator
+    creationTimestamp: "2023-02-05T22:18:07Z"
+    generateName: prometheus-operator-57df45d67c-
+    labels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/name: prometheus-operator
+      app.kubernetes.io/version: 0.62.0
+      pod-template-hash: 57df45d67c
+    name: prometheus-operator-57df45d67c-fcw78
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: prometheus-operator-57df45d67c
+      uid: b29bf6a6-c51f-49b5-87f6-f7eaa187c545
+    resourceVersion: "15812"
+    uid: ddbbbc96-a385-4c3b-84d6-bf9b0c258af0
+  spec:
+    automountServiceAccountToken: true
+    containers:
+    - args:
+      - --kubelet-service=kube-system/kubelet
+      - --prometheus-config-reloader=quay.io/prometheus-operator/prometheus-config-reloader:v0.62.0
+      image: quay.io/prometheus-operator/prometheus-operator:v0.62.0
+      imagePullPolicy: IfNotPresent
+      name: prometheus-operator
+      ports:
+      - containerPort: 8080
+        name: http
+        protocol: TCP
+      resources:
+        limits:
+          cpu: 200m
+          memory: 200Mi
+        requests:
+          cpu: 100m
+          memory: 100Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-kzzzw
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: k8s-01
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 65534
+    serviceAccount: prometheus-operator
+    serviceAccountName: prometheus-operator
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-kzzzw
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-05T22:18:07Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-05T22:18:12Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-05T22:18:12Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-05T22:18:07Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://dd0d864e99133b75926b59a1e89540347aa25652daf9840588358e5bb36f3d90
+      image: quay.io/prometheus-operator/prometheus-operator:v0.62.0
+      imageID: quay.io/prometheus-operator/prometheus-operator@sha256:46fa26e75d8cb62197ab5fd26d09790cf31c30d04d7a04fcc4f7da4bd3f1714d
+      lastState: {}
+      name: prometheus-operator
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-02-05T22:18:12Z"
+    hostIP: 192.168.88.36
+    phase: Running
+    podIP: 10.42.2.3
+    podIPs:
+    - ip: 10.42.2.3
+    qosClass: Burstable
+    startTime: "2023-02-05T22:18:07Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      checksum/config: a66b537b64de4f4b0cedaf551e28dbcc9670f9cf32f574c8581a4b97ac6f35a9
+      checksum/dashboards-json-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+      checksum/sc-dashboard-provider-config: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+      checksum/secret: 30e8c7463e6b3ff46d77135abdc38edb75ca024d28de0044fcd15d9e546e154e
+    creationTimestamp: "2023-02-07T01:09:18Z"
+    generateName: grafana-7fdf86945f-
+    labels:
+      app.kubernetes.io/instance: grafana
+      app.kubernetes.io/name: grafana
+      pod-template-hash: 7fdf86945f
+    name: grafana-7fdf86945f-bvhw4
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: grafana-7fdf86945f
+      uid: 2f2ac9ab-241c-4135-b988-5e0a34501166
+    resourceVersion: "55413"
+    uid: b3e4ece8-ff7b-4651-957e-293026d4688c
+  spec:
+    automountServiceAccountToken: true
+    containers:
+    - env:
+      - name: POD_IP
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: status.podIP
+      - name: GF_SECURITY_ADMIN_USER
+        valueFrom:
+          secretKeyRef:
+            key: admin-user
+            name: grafana
+      - name: GF_SECURITY_ADMIN_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: admin-password
+            name: grafana
+      - name: GF_PATHS_DATA
+        value: /var/lib/grafana/
+      - name: GF_PATHS_LOGS
+        value: /var/log/grafana
+      - name: GF_PATHS_PLUGINS
+        value: /var/lib/grafana/plugins
+      - name: GF_PATHS_PROVISIONING
+        value: /etc/grafana/provisioning
+      image: grafana/grafana:9.3.6
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 10
+        httpGet:
+          path: /api/health
+          port: 3000
+          scheme: HTTP
+        initialDelaySeconds: 60
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 30
+      name: grafana
+      ports:
+      - containerPort: 3000
+        name: grafana
+        protocol: TCP
+      - containerPort: 9094
+        name: gossip-tcp
+        protocol: TCP
+      - containerPort: 9094
+        name: gossip-udp
+        protocol: UDP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /api/health
+          port: 3000
+          scheme: HTTP
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/grafana/grafana.ini
+        name: config
+        subPath: grafana.ini
+      - mountPath: /var/lib/grafana
+        name: storage
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-dhjvj
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: k8s-01
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 472
+      runAsGroup: 472
+      runAsUser: 472
+    serviceAccount: grafana
+    serviceAccountName: grafana
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: grafana
+      name: config
+    - emptyDir: {}
+      name: storage
+    - name: kube-api-access-dhjvj
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:09:18Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:09:39Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:09:39Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:09:18Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://d03b44ff7b540daff699c83f81453c2e1c391f426a1d412970d5e9992621902f
+      image: docker.io/grafana/grafana:9.3.6
+      imageID: docker.io/grafana/grafana@sha256:e5a9655dabef50b04847ee75da8bb9cf46f16480117b7a1d955d5648c1d6e5ba
+      lastState: {}
+      name: grafana
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-02-07T01:09:30Z"
+    hostIP: 192.168.88.36
+    phase: Running
+    podIP: 10.42.2.4
+    podIPs:
+    - ip: 10.42.2.4
+    qosClass: BestEffort
+    startTime: "2023-02-07T01:09:18Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2023-02-07T01:43:00Z"
+    generateName: superset-postgresql-
+    labels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: superset
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: postgresql
+      controller-revision-hash: superset-postgresql-6c6cb67ff4
+      helm.sh/chart: postgresql-12.1.6
+      statefulset.kubernetes.io/pod-name: superset-postgresql-0
+    name: superset-postgresql-0
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: superset-postgresql
+      uid: 26528feb-63a1-452c-b89d-8758be111dda
+    resourceVersion: "56378"
+    uid: 6e66e979-b2f2-47f1-bc15-33f4c11ffea3
+  spec:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: primary
+                app.kubernetes.io/instance: superset
+                app.kubernetes.io/name: postgresql
+            topologyKey: kubernetes.io/hostname
+          weight: 1
+    containers:
+    - env:
+      - name: BITNAMI_DEBUG
+        value: "false"
+      - name: POSTGRESQL_PORT_NUMBER
+        value: "5432"
+      - name: POSTGRESQL_VOLUME_DIR
+        value: /bitnami/postgresql
+      - name: PGDATA
+        value: /bitnami/postgresql/data
+      - name: POSTGRES_USER
+        value: superset
+      - name: POSTGRES_POSTGRES_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: postgres-password
+            name: superset-postgresql
+      - name: POSTGRES_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: password
+            name: superset-postgresql
+      - name: POSTGRES_DB
+        value: superset
+      - name: POSTGRESQL_ENABLE_LDAP
+        value: "no"
+      - name: POSTGRESQL_ENABLE_TLS
+        value: "no"
+      - name: POSTGRESQL_LOG_HOSTNAME
+        value: "false"
+      - name: POSTGRESQL_LOG_CONNECTIONS
+        value: "false"
+      - name: POSTGRESQL_LOG_DISCONNECTIONS
+        value: "false"
+      - name: POSTGRESQL_PGAUDIT_LOG_CATALOG
+        value: "off"
+      - name: POSTGRESQL_CLIENT_MIN_MESSAGES
+        value: error
+      - name: POSTGRESQL_SHARED_PRELOAD_LIBRARIES
+        value: pgaudit
+      image: docker.io/bitnami/postgresql:14.6.0-debian-11-r13
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        exec:
+          command:
+          - /bin/sh
+          - -c
+          - exec pg_isready -U "superset" -d "dbname=superset" -h 127.0.0.1 -p 5432
+        failureThreshold: 6
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: postgresql
+      ports:
+      - containerPort: 5432
+        name: tcp-postgresql
+        protocol: TCP
+      readinessProbe:
+        exec:
+          command:
+          - /bin/sh
+          - -c
+          - -e
+          - |
+            exec pg_isready -U "superset" -d "dbname=superset" -h 127.0.0.1 -p 5432
+            [ -f /opt/bitnami/postgresql/tmp/.initialized ] || [ -f /bitnami/postgresql/.initialized ]
+        failureThreshold: 6
+        initialDelaySeconds: 5
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      resources:
+        requests:
+          cpu: 250m
+          memory: 256Mi
+      securityContext:
+        runAsUser: 1001
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /dev/shm
+        name: dshm
+      - mountPath: /bitnami/postgresql
+        name: data
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-vqfdt
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: superset-postgresql-0
+    nodeName: k8s-02
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1001
+    serviceAccount: default
+    serviceAccountName: default
+    subdomain: superset-postgresql-hl
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: data-superset-postgresql-0
+    - emptyDir:
+        medium: Memory
+      name: dshm
+    - name: kube-api-access-vqfdt
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:43:08Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:43:29Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:43:29Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:43:08Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://04368beae7ca0e50613b49103a1ee12c2c5cc9276ab826828b746a37ec1b97cf
+      image: docker.io/bitnami/postgresql:14.6.0-debian-11-r13
+      imageID: docker.io/bitnami/postgresql@sha256:3e03f38b67c1b0035beb09729e5b4d073e428c2a7304692db3b0b3eb89104f4f
+      lastState: {}
+      name: postgresql
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-02-07T01:43:19Z"
+    hostIP: 192.168.88.37
+    phase: Running
+    podIP: 10.42.1.6
+    podIPs:
+    - ip: 10.42.1.6
+    qosClass: Burstable
+    startTime: "2023-02-07T01:43:08Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      checksum/configmap: d4f79c4e9ec6c1e8adcc10e819ae60788eeafbb3642d296d1c8ac3edfec51fd1
+      checksum/health: 9d7b9847ade6dfae62b87b0aed98e58cbbebcb0b2654d21174f8e2352c3831fc
+      checksum/scripts: 54ecadff798bde3c391c51a1cf242b2e2c6b99c7cad0b9d11696b233600e0178
+      checksum/secret: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    creationTimestamp: "2023-02-07T01:43:00Z"
+    generateName: superset-redis-master-
+    labels:
+      app.kubernetes.io/component: master
+      app.kubernetes.io/instance: superset
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: redis
+      controller-revision-hash: superset-redis-master-6d875d5c56
+      helm.sh/chart: redis-17.3.17
+      statefulset.kubernetes.io/pod-name: superset-redis-master-0
+    name: superset-redis-master-0
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: superset-redis-master
+      uid: 412711b5-606e-4544-909a-18f2c3b6709f
+    resourceVersion: "56383"
+    uid: ac7975e8-b556-4290-98ba-804324d57f6f
+  spec:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: master
+                app.kubernetes.io/instance: superset
+                app.kubernetes.io/name: redis
+            topologyKey: kubernetes.io/hostname
+          weight: 1
+    containers:
+    - args:
+      - -c
+      - /opt/bitnami/scripts/start-scripts/start-master.sh
+      command:
+      - /bin/bash
+      env:
+      - name: BITNAMI_DEBUG
+        value: "false"
+      - name: REDIS_REPLICATION_MODE
+        value: master
+      - name: ALLOW_EMPTY_PASSWORD
+        value: "yes"
+      - name: REDIS_TLS_ENABLED
+        value: "no"
+      - name: REDIS_PORT
+        value: "6379"
+      image: docker.io/bitnami/redis:7.0.7-debian-11-r0
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        exec:
+          command:
+          - sh
+          - -c
+          - /health/ping_liveness_local.sh 5
+        failureThreshold: 5
+        initialDelaySeconds: 20
+        periodSeconds: 5
+        successThreshold: 1
+        timeoutSeconds: 6
+      name: redis
+      ports:
+      - containerPort: 6379
+        name: redis
+        protocol: TCP
+      readinessProbe:
+        exec:
+          command:
+          - sh
+          - -c
+          - /health/ping_readiness_local.sh 1
+        failureThreshold: 5
+        initialDelaySeconds: 20
+        periodSeconds: 5
+        successThreshold: 1
+        timeoutSeconds: 2
+      resources: {}
+      securityContext:
+        runAsUser: 1001
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /opt/bitnami/scripts/start-scripts
+        name: start-scripts
+      - mountPath: /health
+        name: health
+      - mountPath: /data
+        name: redis-data
+      - mountPath: /opt/bitnami/redis/mounted-etc
+        name: config
+      - mountPath: /opt/bitnami/redis/etc/
+        name: redis-tmp-conf
+      - mountPath: /tmp
+        name: tmp
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-n77sc
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: superset-redis-master-0
+    nodeName: k8s-01
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      fsGroup: 1001
+    serviceAccount: superset-redis
+    serviceAccountName: superset-redis
+    subdomain: superset-redis-headless
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - configMap:
+        defaultMode: 493
+        name: superset-redis-scripts
+      name: start-scripts
+    - configMap:
+        defaultMode: 493
+        name: superset-redis-health
+      name: health
+    - configMap:
+        defaultMode: 420
+        name: superset-redis-configuration
+      name: config
+    - emptyDir: {}
+      name: redis-tmp-conf
+    - emptyDir: {}
+      name: tmp
+    - emptyDir: {}
+      name: redis-data
+    - name: kube-api-access-n77sc
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:43:00Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:43:31Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:43:31Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:43:00Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://e09268b170af0111ae2c461a1969dcac7a3e0ff15b54432f5fc0b56e86f5f427
+      image: docker.io/bitnami/redis:7.0.7-debian-11-r0
+      imageID: docker.io/bitnami/redis@sha256:0f94dd0f014e2a0bd66b2916a2feebf8e53b56576ed4ac871641bc179141d306
+      lastState: {}
+      name: redis
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-02-07T01:43:07Z"
+    hostIP: 192.168.88.36
+    phase: Running
+    podIP: 10.42.2.6
+    podIPs:
+    - ip: 10.42.2.6
+    qosClass: BestEffort
+    startTime: "2023-02-07T01:43:00Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      checksum/configOverrides: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+      checksum/configOverridesFiles: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+      checksum/connections: a91716d6d1088e870fbe02159dc0b066dd011885aa08a22fbe60ea1cd4720f82
+      checksum/extraConfigs: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+      checksum/extraSecretEnv: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+      checksum/extraSecrets: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+      checksum/superset_config.py: 441901105d53c640c7612da3d7b751dc6f770c1796e733ee79c9322d27cd1b5d
+    creationTimestamp: "2023-02-07T01:43:00Z"
+    generateName: superset-worker-56d46b7978-
+    labels:
+      app: superset-worker
+      pod-template-hash: 56d46b7978
+      release: superset
+    name: superset-worker-56d46b7978-r7cfm
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: superset-worker-56d46b7978
+      uid: 2539ec44-2062-40ce-98d0-a39580eff014
+    resourceVersion: "56482"
+    uid: 11ad6b8b-0fe2-4905-8b32-059fce408ee1
+  spec:
+    containers:
+    - command:
+      - /bin/sh
+      - -c
+      - . /app/pythonpath/superset_bootstrap.sh; celery --app=superset.tasks.celery_app:app
+        worker
+      env:
+      - name: SUPERSET_PORT
+        value: "8088"
+      envFrom:
+      - secretRef:
+          name: superset-env
+      image: apache/superset:2.0.1
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        exec:
+          command:
+          - sh
+          - -c
+          - celery -A superset.tasks.celery_app:app inspect ping -d celery@$HOSTNAME
+        failureThreshold: 3
+        initialDelaySeconds: 120
+        periodSeconds: 60
+        successThreshold: 1
+        timeoutSeconds: 60
+      name: superset
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /app/pythonpath
+        name: superset-config
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-v42tq
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    initContainers:
+    - command:
+      - /bin/sh
+      - -c
+      - dockerize -wait "tcp://$DB_HOST:$DB_PORT" -wait "tcp://$REDIS_HOST:$REDIS_PORT"
+        -timeout 120s
+      envFrom:
+      - secretRef:
+          name: superset-env
+      image: jwilder/dockerize:latest
+      imagePullPolicy: IfNotPresent
+      name: wait-for-postgres-redis
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-v42tq
+        readOnly: true
+    nodeName: k8s-02
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      runAsUser: 0
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: superset-config
+      secret:
+        defaultMode: 420
+        secretName: superset-config
+    - name: kube-api-access-v42tq
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:45:05Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:46:35Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:46:35Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:43:00Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://ee1f8d8a964b39ce7adaba9d431a65025327e064bc5498c568f877dc613556ac
+      image: docker.io/apache/superset:2.0.1
+      imageID: docker.io/apache/superset@sha256:e9440aa546524356ef8ab6f8d0a0d9c9e562796229c30f35426676564db1ca93
+      lastState: {}
+      name: superset
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-02-07T01:46:34Z"
+    hostIP: 192.168.88.37
+    initContainerStatuses:
+    - containerID: containerd://fbd06221f2f474aa853073d2299a76f48a027624a2839175aabcfc9facc01d3b
+      image: docker.io/jwilder/dockerize:latest
+      imageID: docker.io/jwilder/dockerize@sha256:b4da07ad265d2dd83fc91a73f56df54def78ba3db5c4fb74cbb9b7e79b7b3c58
+      lastState: {}
+      name: wait-for-postgres-redis
+      ready: true
+      restartCount: 1
+      state:
+        terminated:
+          containerID: containerd://fbd06221f2f474aa853073d2299a76f48a027624a2839175aabcfc9facc01d3b
+          exitCode: 0
+          finishedAt: "2023-02-07T01:45:04Z"
+          reason: Completed
+          startedAt: "2023-02-07T01:45:04Z"
+    phase: Running
+    podIP: 10.42.1.4
+    podIPs:
+    - ip: 10.42.1.4
+    qosClass: BestEffort
+    startTime: "2023-02-07T01:43:00Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      checksum/configOverrides: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+      checksum/configOverridesFiles: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+      checksum/connections: a91716d6d1088e870fbe02159dc0b066dd011885aa08a22fbe60ea1cd4720f82
+      checksum/extraConfigs: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+      checksum/extraSecretEnv: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+      checksum/extraSecrets: 44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+      checksum/superset_bootstrap.sh: 59815567c8b709fff291a1ced61bfacc8c8181f6c1231c334ff08f5fe748095c
+      checksum/superset_config.py: 441901105d53c640c7612da3d7b751dc6f770c1796e733ee79c9322d27cd1b5d
+      checksum/superset_init.sh: e6b1e8eac1f7a79a07a6c72a0e2ee6e09654eeb439c6bbe61bfd676917c41e02
+    creationTimestamp: "2023-02-07T01:43:00Z"
+    generateName: superset-6f69688fdb-
+    labels:
+      app: superset
+      pod-template-hash: 6f69688fdb
+      release: superset
+    name: superset-6f69688fdb-62c5m
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: superset-6f69688fdb
+      uid: a4945648-b6c9-410e-a26b-2c61b595199e
+    resourceVersion: "56499"
+    uid: 8ea68bc3-32e4-4dd2-8a5f-8378f3c0da82
+  spec:
+    containers:
+    - command:
+      - /bin/sh
+      - -c
+      - . /app/pythonpath/superset_bootstrap.sh; /usr/bin/run-server.sh
+      env:
+      - name: SUPERSET_PORT
+        value: "8088"
+      envFrom:
+      - secretRef:
+          name: superset-env
+      image: apache/superset:2.0.1
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health
+          port: http
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 15
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: superset
+      ports:
+      - containerPort: 8088
+        name: http
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /health
+          port: http
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 15
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources: {}
+      startupProbe:
+        failureThreshold: 60
+        httpGet:
+          path: /health
+          port: http
+          scheme: HTTP
+        initialDelaySeconds: 15
+        periodSeconds: 5
+        successThreshold: 1
+        timeoutSeconds: 1
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /app/pythonpath
+        name: superset-config
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-qqjp8
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    initContainers:
+    - command:
+      - /bin/sh
+      - -c
+      - dockerize -wait "tcp://$DB_HOST:$DB_PORT" -timeout 120s
+      envFrom:
+      - secretRef:
+          name: superset-env
+      image: jwilder/dockerize:latest
+      imagePullPolicy: IfNotPresent
+      name: wait-for-postgres
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-qqjp8
+        readOnly: true
+    nodeName: k8s-01
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      runAsUser: 0
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: superset-config
+      secret:
+        defaultMode: 420
+        secretName: superset-config
+    - name: kube-api-access-qqjp8
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:45:04Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:46:56Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:46:56Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:43:00Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://bbb36c13b837b1b7f97a676cf0d42cfcfba33222bd9e42d745df0afd91f2a084
+      image: docker.io/apache/superset:2.0.1
+      imageID: docker.io/apache/superset@sha256:e9440aa546524356ef8ab6f8d0a0d9c9e562796229c30f35426676564db1ca93
+      lastState: {}
+      name: superset
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-02-07T01:46:41Z"
+    hostIP: 192.168.88.36
+    initContainerStatuses:
+    - containerID: containerd://3dcfa6cb2fa3c9770d37ce2ade38d7cce34dc9f75db4b3e29d163a9122182fae
+      image: docker.io/jwilder/dockerize:latest
+      imageID: docker.io/jwilder/dockerize@sha256:b4da07ad265d2dd83fc91a73f56df54def78ba3db5c4fb74cbb9b7e79b7b3c58
+      lastState: {}
+      name: wait-for-postgres
+      ready: true
+      restartCount: 1
+      state:
+        terminated:
+          containerID: containerd://3dcfa6cb2fa3c9770d37ce2ade38d7cce34dc9f75db4b3e29d163a9122182fae
+          exitCode: 0
+          finishedAt: "2023-02-07T01:45:03Z"
+          reason: Completed
+          startedAt: "2023-02-07T01:45:03Z"
+    phase: Running
+    podIP: 10.42.2.5
+    podIPs:
+    - ip: 10.42.2.5
+    qosClass: BestEffort
+    startTime: "2023-02-07T01:43:00Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    creationTimestamp: "2023-02-07T01:46:56Z"
+    generateName: superset-init-db-
+    labels:
+      controller-uid: b34aab18-541a-4743-9ae1-2fde74841a65
+      job-name: superset-init-db
+    name: superset-init-db-zddkf
+    namespace: default
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: superset-init-db
+      uid: b34aab18-541a-4743-9ae1-2fde74841a65
+    resourceVersion: "56547"
+    uid: f8028dc5-c106-4a8b-b6e4-5ef827529ac4
+  spec:
+    containers:
+    - command:
+      - /bin/sh
+      - -c
+      - . /app/pythonpath/superset_bootstrap.sh; . /app/pythonpath/superset_init.sh
+      envFrom:
+      - secretRef:
+          name: superset-env
+      image: apache/superset:2.0.1
+      imagePullPolicy: IfNotPresent
+      name: superset-init-db
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /app/pythonpath
+        name: superset-config
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7bj42
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    initContainers:
+    - command:
+      - /bin/sh
+      - -c
+      - dockerize -wait "tcp://$DB_HOST:$DB_PORT" -timeout 120s
+      envFrom:
+      - secretRef:
+          name: superset-env
+      image: jwilder/dockerize:latest
+      imagePullPolicy: IfNotPresent
+      name: wait-for-postgres
+      resources: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-7bj42
+        readOnly: true
+    nodeName: k8s-01
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext:
+      runAsUser: 0
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: superset-config
+      secret:
+        defaultMode: 420
+        secretName: superset-config
+    - name: kube-api-access-7bj42
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:46:58Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:47:43Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:47:43Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-07T01:46:57Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://f268ec1b634b50870102f09311e8a620145334ca42beb139cc35dc36737d2bc6
+      image: docker.io/apache/superset:2.0.1
+      imageID: docker.io/apache/superset@sha256:e9440aa546524356ef8ab6f8d0a0d9c9e562796229c30f35426676564db1ca93
+      lastState: {}
+      name: superset-init-db
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: containerd://f268ec1b634b50870102f09311e8a620145334ca42beb139cc35dc36737d2bc6
+          exitCode: 0
+          finishedAt: "2023-02-07T01:47:43Z"
+          reason: Completed
+          startedAt: "2023-02-07T01:46:59Z"
+    hostIP: 192.168.88.36
+    initContainerStatuses:
+    - containerID: containerd://3a8a6ef547fc83c092e4dd8d9874eaf66f266059192dc50eae548eef25634cfb
+      image: docker.io/jwilder/dockerize:latest
+      imageID: docker.io/jwilder/dockerize@sha256:b4da07ad265d2dd83fc91a73f56df54def78ba3db5c4fb74cbb9b7e79b7b3c58
+      lastState: {}
+      name: wait-for-postgres
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: containerd://3a8a6ef547fc83c092e4dd8d9874eaf66f266059192dc50eae548eef25634cfb
+          exitCode: 0
+          finishedAt: "2023-02-07T01:46:57Z"
+          reason: Completed
+          startedAt: "2023-02-07T01:46:57Z"
+    phase: Succeeded
+    podIP: 10.42.2.7
+    podIPs:
+    - ip: 10.42.2.7
+    qosClass: BestEffort
+    startTime: "2023-02-07T01:46:57Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/default-container: prometheus
+      kubectl.kubernetes.io/restartedAt: "2023-02-08T01:18:37Z"
+    creationTimestamp: "2023-02-08T01:18:38Z"
+    generateName: prometheus-kappa123-9f74bd06-
+    labels:
+      app.kubernetes.io/instance: kappa123-9f74bd06
+      app.kubernetes.io/managed-by: prometheus-operator
+      app.kubernetes.io/name: prometheus
+      app.kubernetes.io/version: 2.41.0
+      controller-revision-hash: prometheus-kappa123-9f74bd06-5986b46d7d
+      operator.prometheus.io/name: kappa123-9f74bd06
+      operator.prometheus.io/shard: "0"
+      prometheus: kappa123-9f74bd06
+      statefulset.kubernetes.io/pod-name: prometheus-kappa123-9f74bd06-0
+    name: prometheus-kappa123-9f74bd06-0
+    namespace: default
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: prometheus-kappa123-9f74bd06
+      uid: 4b0db41f-5dae-4207-9e25-ed33a8d7afef
+    resourceVersion: "91308"
+    uid: 45d59b8a-7fbc-4332-8cf9-0bc3e3f41e02
+  spec:
+    automountServiceAccountToken: true
+    containers:
+    - args:
+      - --web.console.templates=/etc/prometheus/consoles
+      - --web.console.libraries=/etc/prometheus/console_libraries
+      - --storage.tsdb.retention.time=24h
+      - --config.file=/etc/prometheus/config_out/prometheus.env.yaml
+      - --storage.tsdb.path=/prometheus
+      - --web.enable-lifecycle
+      - --web.route-prefix=/
+      - --web.config.file=/etc/prometheus/web_config/web-config.yaml
+      image: quay.io/prometheus/prometheus:v2.41.0
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 6
+        httpGet:
+          path: /-/healthy
+          port: web
+          scheme: HTTP
+        periodSeconds: 5
+        successThreshold: 1
+        timeoutSeconds: 3
+      name: prometheus
+      ports:
+      - containerPort: 9090
+        name: web
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /-/ready
+          port: web
+          scheme: HTTP
+        periodSeconds: 5
+        successThreshold: 1
+        timeoutSeconds: 3
+      resources:
+        requests:
+          memory: 400Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+      startupProbe:
+        failureThreshold: 60
+        httpGet:
+          path: /-/ready
+          port: web
+          scheme: HTTP
+        periodSeconds: 15
+        successThreshold: 1
+        timeoutSeconds: 3
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /etc/prometheus/config_out
+        name: config-out
+        readOnly: true
+      - mountPath: /etc/prometheus/certs
+        name: tls-assets
+        readOnly: true
+      - mountPath: /prometheus
+        name: prometheus-kappa123-9f74bd06-db
+      - mountPath: /etc/prometheus/rules/prometheus-kappa123-9f74bd06-rulefiles-0
+        name: prometheus-kappa123-9f74bd06-rulefiles-0
+      - mountPath: /etc/prometheus/web_config/web-config.yaml
+        name: web-config
+        readOnly: true
+        subPath: web-config.yaml
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-9xq5l
+        readOnly: true
+    - args:
+      - --listen-address=:8080
+      - --reload-url=http://localhost:9090/-/reload
+      - --config-file=/etc/prometheus/config/prometheus.yaml.gz
+      - --config-envsubst-file=/etc/prometheus/config_out/prometheus.env.yaml
+      - --watched-dir=/etc/prometheus/rules/prometheus-kappa123-9f74bd06-rulefiles-0
+      command:
+      - /bin/prometheus-config-reloader
+      env:
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      - name: SHARD
+        value: "0"
+      image: quay.io/prometheus-operator/prometheus-config-reloader:v0.62.0
+      imagePullPolicy: IfNotPresent
+      name: config-reloader
+      ports:
+      - containerPort: 8080
+        name: reloader-web
+        protocol: TCP
+      resources:
+        limits:
+          cpu: 100m
+          memory: 50Mi
+        requests:
+          cpu: 100m
+          memory: 50Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /etc/prometheus/config
+        name: config
+      - mountPath: /etc/prometheus/config_out
+        name: config-out
+      - mountPath: /etc/prometheus/rules/prometheus-kappa123-9f74bd06-rulefiles-0
+        name: prometheus-kappa123-9f74bd06-rulefiles-0
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-9xq5l
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: prometheus-kappa123-9f74bd06-0
+    initContainers:
+    - args:
+      - --watch-interval=0
+      - --listen-address=:8080
+      - --config-file=/etc/prometheus/config/prometheus.yaml.gz
+      - --config-envsubst-file=/etc/prometheus/config_out/prometheus.env.yaml
+      - --watched-dir=/etc/prometheus/rules/prometheus-kappa123-9f74bd06-rulefiles-0
+      command:
+      - /bin/prometheus-config-reloader
+      env:
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      - name: SHARD
+        value: "0"
+      image: quay.io/prometheus-operator/prometheus-config-reloader:v0.62.0
+      imagePullPolicy: IfNotPresent
+      name: init-config-reloader
+      ports:
+      - containerPort: 8080
+        name: reloader-web
+        protocol: TCP
+      resources:
+        limits:
+          cpu: 100m
+          memory: 50Mi
+        requests:
+          cpu: 100m
+          memory: 50Mi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: FallbackToLogsOnError
+      volumeMounts:
+      - mountPath: /etc/prometheus/config
+        name: config
+      - mountPath: /etc/prometheus/config_out
+        name: config-out
+      - mountPath: /etc/prometheus/rules/prometheus-kappa123-9f74bd06-rulefiles-0
+        name: prometheus-kappa123-9f74bd06-rulefiles-0
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-9xq5l
+        readOnly: true
+    nodeName: k8s-02
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    subdomain: prometheus-operated
+    terminationGracePeriodSeconds: 600
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: config
+      secret:
+        defaultMode: 420
+        secretName: prometheus-kappa123-9f74bd06
+    - name: tls-assets
+      projected:
+        defaultMode: 420
+        sources:
+        - secret:
+            name: prometheus-kappa123-9f74bd06-tls-assets-0
+    - emptyDir: {}
+      name: config-out
+    - configMap:
+        defaultMode: 420
+        name: prometheus-kappa123-9f74bd06-rulefiles-0
+      name: prometheus-kappa123-9f74bd06-rulefiles-0
+    - name: web-config
+      secret:
+        defaultMode: 420
+        secretName: prometheus-kappa123-9f74bd06-web-config
+    - emptyDir: {}
+      name: prometheus-kappa123-9f74bd06-db
+    - name: kube-api-access-9xq5l
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-08T01:18:39Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-08T01:18:53Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-08T01:18:53Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2023-02-08T01:18:38Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://52a988311aa2f0ca60e6c72a7ffb2849508175553d45585818da0dc973322170
+      image: quay.io/prometheus-operator/prometheus-config-reloader:v0.62.0
+      imageID: quay.io/prometheus-operator/prometheus-config-reloader@sha256:267b12235d10a810e49b2d40a3deda6256f92690b26997a199601a47283821b9
+      lastState: {}
+      name: config-reloader
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-02-08T01:18:39Z"
+    - containerID: containerd://1ebff2a9267eacc8190f025c05465475ff49218552689a28f5135861b82cf788
+      image: quay.io/prometheus/prometheus:v2.41.0
+      imageID: quay.io/prometheus/prometheus@sha256:1a3e9a878e50cd339ae7cf5718fda08381dda2d4ccd28e94bbaa3190d1a566c2
+      lastState: {}
+      name: prometheus
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2023-02-08T01:18:39Z"
+    hostIP: 192.168.88.37
+    initContainerStatuses:
+    - containerID: containerd://07b9f71fe13b5637237fed6e88c34d15f6dd4bb335bfe61899e5b48e9f0d5067
+      image: quay.io/prometheus-operator/prometheus-config-reloader:v0.62.0
+      imageID: quay.io/prometheus-operator/prometheus-config-reloader@sha256:267b12235d10a810e49b2d40a3deda6256f92690b26997a199601a47283821b9
+      lastState: {}
+      name: init-config-reloader
+      ready: true
+      restartCount: 0
+      state:
+        terminated:
+          containerID: containerd://07b9f71fe13b5637237fed6e88c34d15f6dd4bb335bfe61899e5b48e9f0d5067
+          exitCode: 0
+          finishedAt: "2023-02-08T01:18:39Z"
+          reason: Completed
+          startedAt: "2023-02-08T01:18:38Z"
+    phase: Running
+    podIP: 10.42.1.8
+    podIPs:
+    - ip: 10.42.1.8
+    qosClass: Burstable
+    startTime: "2023-02-08T01:18:38Z"
+kind: List
+metadata:
+  resourceVersion: ""

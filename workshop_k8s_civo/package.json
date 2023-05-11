@@ -1,0 +1,12 @@
+{
+  "name": "workshop_k8s",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "17.0.25"
+  },
+  "dependencies": {
+    "@pulumi/civo": "2.2.1",
+    "@pulumi/kubernetes": "^3.23.1",
+    "@pulumi/pulumi": "3.30.0"
+  }
+}

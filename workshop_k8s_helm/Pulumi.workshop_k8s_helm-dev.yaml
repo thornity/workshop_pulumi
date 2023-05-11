@@ -1,0 +1,3 @@
+encryptionsalt: v1:0Bmpz89HSew=:v1:ABZW48IBS/bkeqja:93T6rHVBR/Pnq14Zt2HgtfMh5xjCMQ==
+config:
+  workshop_k8s_helm:k8sNamespace: redis
